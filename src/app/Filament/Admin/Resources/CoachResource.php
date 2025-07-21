@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\PlayerResource\Pages;
-use App\Filament\Admin\Resources\PlayerResource\RelationManagers;
-use App\Models\Player;
+use App\Filament\Admin\Resources\CoachResource\Pages;
+use App\Filament\Admin\Resources\CoachResource\RelationManagers;
+use App\Models\Coach;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PlayerResource extends Resource
+class CoachResource extends Resource
 {
-    protected static ?string $model = Player::class;
+    protected static ?string $model = Coach::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -26,21 +26,12 @@ class PlayerResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('position')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\TextInput::make('role')
+                    ->required(),
                 Forms\Components\TextInput::make('nationality')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('birth_date')
-                    ->required(),
-                Forms\Components\TextInput::make('jersey_number')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
-                Forms\Components\TextInput::make('team_role')
-                    ->required(),
+                    ->maxLength(255)
+                    ->default(null),
+                Forms\Components\DatePicker::make('birth_date'),
             ]);
     }
 
@@ -50,18 +41,12 @@ class PlayerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('position')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('role'),
                 Tables\Columns\TextColumn::make('nationality')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('birth_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('jersey_number')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('team_role'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -94,9 +79,9 @@ class PlayerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPlayers::route('/'),
-            'create' => Pages\CreatePlayer::route('/create'),
-            'edit' => Pages\EditPlayer::route('/{record}/edit'),
+            'index' => Pages\ListCoaches::route('/'),
+            'create' => Pages\CreateCoach::route('/create'),
+            'edit' => Pages\EditCoach::route('/{record}/edit'),
         ];
     }
 }

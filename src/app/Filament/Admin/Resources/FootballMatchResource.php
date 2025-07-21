@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\PlayerResource\Pages;
-use App\Filament\Admin\Resources\PlayerResource\RelationManagers;
-use App\Models\Player;
+use App\Filament\Admin\Resources\FootballMatchResource\Pages;
+use App\Filament\Admin\Resources\FootballMatchResource\RelationManagers;
+use App\Models\FootballMatch;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PlayerResource extends Resource
+class FootballMatchResource extends Resource
 {
-    protected static ?string $model = Player::class;
+    protected static ?string $model = FootballMatch::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,24 +23,20 @@ class PlayerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('opponent')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('position')
+                Forms\Components\DatePicker::make('match_date')
+                    ->required(),
+                Forms\Components\TextInput::make('score')
+                    ->maxLength(255)
+                    ->default(null),
+                Forms\Components\TextInput::make('competition')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('nationality')
+                Forms\Components\TextInput::make('stadium_name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('birth_date')
-                    ->required(),
-                Forms\Components\TextInput::make('jersey_number')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
-                Forms\Components\TextInput::make('team_role')
-                    ->required(),
             ]);
     }
 
@@ -48,20 +44,17 @@ class PlayerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('opponent')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('position')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nationality')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('birth_date')
+                Tables\Columns\TextColumn::make('match_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('jersey_number')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('team_role'),
+                Tables\Columns\TextColumn::make('score')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('competition')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('stadium_name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -94,9 +87,9 @@ class PlayerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPlayers::route('/'),
-            'create' => Pages\CreatePlayer::route('/create'),
-            'edit' => Pages\EditPlayer::route('/{record}/edit'),
+            'index' => Pages\ListFootballMatches::route('/'),
+            'create' => Pages\CreateFootballMatch::route('/create'),
+            'edit' => Pages\EditFootballMatch::route('/{record}/edit'),
         ];
     }
 }
