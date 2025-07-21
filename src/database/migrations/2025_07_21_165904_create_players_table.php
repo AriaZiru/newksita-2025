@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+             $table->string('name');
+             $table->string('position');
+             $table->string('nationality');
+             $table->date('birth_date');
+             $table->integer('jersey_number');
+             $table->enum('status', ['active', 'loan', 'injured', 'retired'])->default('active');
+             $table->enum('team_role', ['starter', 'substitute'])->default('starter');
+             $table->timestamps();
         });
     }
 
