@@ -12,10 +12,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
 class LineUpsResource extends Resource
 {
     protected static ?string $model = LineUps::class;
+    protected static ?string $pluralLabel = 'Line Up Player';
+
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -29,8 +32,9 @@ class LineUpsResource extends Resource
                 Forms\Components\TextInput::make('player_id')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('lineup_role')
-                    ->required(),
+                Forms\Components\Select::make('lineup_role')
+                    ->required()
+                    ->options(['starter'=>'starter', 'substitute'=>'substitute']),
                 Forms\Components\TextInput::make('minutes_played')
                     ->required()
                     ->numeric()

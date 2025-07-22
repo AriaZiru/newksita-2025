@@ -12,10 +12,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
 class PlayerResource extends Resource
 {
     protected static ?string $model = Player::class;
+    protected static ?string $pluralLabel = 'Player';
+
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -37,10 +40,12 @@ class PlayerResource extends Resource
                 Forms\Components\TextInput::make('jersey_number')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
-                Forms\Components\TextInput::make('team_role')
-                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->required()
+                    ->options(['active'=>'active', 'loan'=>'loan', 'injured'=>'injured', 'retired'=>'retired',]),
+                Forms\Components\Select::make('team_role')
+                    ->required()
+                    ->options(['starter'=>'starter', 'substitute'=>'substitute']),
             ]);
     }
 
