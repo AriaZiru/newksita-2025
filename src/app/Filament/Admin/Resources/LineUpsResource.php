@@ -62,7 +62,9 @@ class LineUpsResource extends Resource
                 Tables\Columns\TextColumn::make('player_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('lineup_role'),
+                Tables\Columns\Select::make('lineup_role')
+                    ->required()
+                    ->options(['starter'=>'starter', 'substitute'=>'substitute',]),
                 Tables\Columns\TextColumn::make('minutes_played')
                     ->numeric()
                     ->sortable(),
@@ -72,7 +74,9 @@ class LineUpsResource extends Resource
                 Tables\Columns\TextColumn::make('assists')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('card'),
+                Tables\Columns\Select::make('card')
+                    ->required()
+                    ->options(['none'=>'none', 'yellow'=>'yellow', 'red'=>'red', 'yellow_red'=>'yellow red']),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
