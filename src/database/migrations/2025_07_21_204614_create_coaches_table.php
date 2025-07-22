@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('coaches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('role', ['head', 'assistant', 'fitness', 'goalkeeper'])->default('assistant');
+            $table->enum('role', ['none','head', 'assistant', 'fitness', 'goalkeeper'])->default('none');
             $table->string('nationality')->nullable();
             $table->date('birth_date')->nullable();
             $table->timestamps();

@@ -64,7 +64,7 @@ class FootballMatchResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
+            ->filters([         
                 //
             ])
             ->actions([

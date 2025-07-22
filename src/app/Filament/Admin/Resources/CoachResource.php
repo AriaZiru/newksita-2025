@@ -12,10 +12,12 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
 class CoachResource extends Resource
 {
     protected static ?string $model = Coach::class;
+    protected static ?string $pluralLabel = 'Coach';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -28,6 +30,12 @@ class CoachResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('role')
                     ->required(),
+                     Select::make('status')
+                     ->label('Status')
+                     ->required()
+                     ->options([ 'none'=> 'None','head'=> 'Head coach', 'assistant coach'=> 'Assistant',
+                                 'fitness'=> 'Fitness coach', 'goalkeeper'=> 'Goalkeeper coach'
+                                ,]),
                 Forms\Components\TextInput::make('nationality')
                     ->maxLength(255)
                     ->default(null),
