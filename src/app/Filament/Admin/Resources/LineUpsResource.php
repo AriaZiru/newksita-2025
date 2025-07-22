@@ -26,13 +26,17 @@ class LineUpsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('match_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('player_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('match_id')
+                    ->label('Match Opponent')
+                    ->searchable()
+                    ->required(),
+                Select::make('player_id')
+                    ->relationship('Player', 'name')
+                    ->label('Player Name')
+                    ->searchable()
+                    ->required(),
                 Forms\Components\Select::make('lineup_role')
+                    ->label('Line Up Role')
                     ->required()
                     ->options(['starter'=>'starter', 'substitute'=>'substitute']),
                 Forms\Components\TextInput::make('minutes_played')
@@ -47,8 +51,9 @@ class LineUpsResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\TextInput::make('card')
-                    ->required(),
+                Forms\Components\Select::make('card')
+                    ->required()
+                    ->options(['none'=>'none','yellow'=>'yellow', 'red'=>'red', 'yellow_red'=>'yellow red']),
             ]);
     }
 
@@ -62,9 +67,7 @@ class LineUpsResource extends Resource
                 Tables\Columns\TextColumn::make('player_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\Select::make('lineup_role')
-                    ->required()
-                    ->options(['starter'=>'starter', 'substitute'=>'substitute',]),
+                Tables\Columns\TextColumn::make('lineup_role'),
                 Tables\Columns\TextColumn::make('minutes_played')
                     ->numeric()
                     ->sortable(),
@@ -74,9 +77,7 @@ class LineUpsResource extends Resource
                 Tables\Columns\TextColumn::make('assists')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\Select::make('card')
-                    ->required()
-                    ->options(['none'=>'none', 'yellow'=>'yellow', 'red'=>'red', 'yellow_red'=>'yellow red']),
+                Tables\Columns\TextColumn::make('card'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
