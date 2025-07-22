@@ -28,15 +28,20 @@ class FootballMatchResource extends Resource
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('match_date')
                     ->required(),
-                Forms\Components\TextInput::make('score')
-                    ->maxLength(255)
-                    ->default(null),
                 Forms\Components\TextInput::make('competition')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('stadium_name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('home_score')
+                    ->label('Score Real Madrid')
+                    ->numeric()
+                    ->default(null),
+                Forms\Components\TextInput::make('away_score')
+                    ->label('Score Opponent')
+                    ->numeric()
+                    ->default(null),
             ]);
     }
 
@@ -49,11 +54,13 @@ class FootballMatchResource extends Resource
                 Tables\Columns\TextColumn::make('match_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('score')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('competition')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('stadium_name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('formatted_score')
+                    ->label('Score')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -64,7 +71,7 @@ class FootballMatchResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([         
+            ->filters([
                 //
             ])
             ->actions([

@@ -40,7 +40,7 @@ class CoachResource extends Resource
                     ->maxLength(255)
                     ->default(null),
                 Forms\Components\DatePicker::make('birth_date'),
-            ]);
+            ]); 
     }
 
     public static function table(Table $table): Table

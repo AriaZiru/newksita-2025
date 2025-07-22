@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('opponent');
             $table->date('match_date');
-            $table->string('score')->nullable();
             $table->string('competition');
             $table->string('stadium_name');
+            $table->unsignedTinyInteger('home_score')->nullable();
+            $table->unsignedTinyInteger('away_score')->nullable();
             $table->timestamps();
         });
     }
